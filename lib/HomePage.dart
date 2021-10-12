@@ -96,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         MediaQuery.of(context).size.height * 0.1)),
                 onPressed: () {
                   setState(() {
-                    ShowCupertinoBottomSheet(context);
+                    showCupertinoBottomSheet(context);
                     indicator = !indicator;
                   });
                 },
@@ -125,7 +125,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Future<dynamic> ShowCupertinoBottomSheet(BuildContext context) {
+  Future<dynamic> showCupertinoBottomSheet(BuildContext context) {
     return Future.delayed(const Duration(milliseconds: 650), () {
       showCupertinoModalPopup(
           barrierColor: Colors.black38,
