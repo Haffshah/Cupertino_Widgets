@@ -1,4 +1,9 @@
 import 'dart:ui';
+import 'package:cupertinowidgets/AlertBox.dart';
+import 'package:cupertinowidgets/ContextMenuWidget.dart';
+import 'package:cupertinowidgets/CupertinoActionSheetWidget.dart';
+import 'package:cupertinowidgets/CupertimoBottomSheet.dart';
+import 'package:cupertinowidgets/CupertinoSwitch.dart';
 import 'package:cupertinowidgets/LeftSideMenu.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +16,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  bool indicator = false;
+
+
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
@@ -27,7 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onTap: () {
                 Navigator.push(
                     context,
-                    MaterialPageRoute(
+                    CupertinoPageRoute(
                       builder: (context) => DrawerClass(),
                     ));
               },
@@ -37,188 +45,94 @@ class _MyHomePageState extends State<MyHomePage> {
               )),
           automaticallyImplyLeading: false,
           transitionBetweenRoutes: true,
-          trailing: Icon(CupertinoIcons.forward),
-          middle: Text('CUPERTINO widgets')),
-      child: SafeArea(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 20.0,
-            ),
-
-            SizedBox(
-              height: 20.0,
-            ),
-            CupertinoButton.filled(
-              borderRadius: BorderRadius.all(
-                Radius.circular(30.0),
-              ),
-              pressedOpacity: 0.4,
-              padding: const EdgeInsets.all(20.0),
-              child: const Text('Alert Dialog'),
-              onPressed: () {
-                showCupertinoDialog<void>(
-                  context: context,
-                  builder: (BuildContext context) => CupertinoAlertDialog(
-                    title: Image.asset("images/cupertino.png"),
-                    content: const Text('This is Alert dialog box'),
-                    actions: <CupertinoDialogAction>[
-                      CupertinoDialogAction( isDestructiveAction: true,
-                        child: const Text('No'),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                      CupertinoDialogAction(
-                        child: const Text('Yes'),
-
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      )
-                    ],
+          trailing: GestureDetector(onTap:() {
+                Navigator.push(
+                  context,
+                  CupertinoPageRoute(
+                    builder: (context) => CupertinoSwitchWidget(),
                   ),
                 );
-              },
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
-            CupertinoButton(
-              borderRadius: BorderRadius.circular(25),
-              color: Color(0xff000000),
-              child: const Text('Dialog Box'),
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return CupertinoAlertDialog(
-                      title: Column(
-                        children: <Widget>[
-                          Text(" Allow \"Maps\" to access your " +
-                              " location while you use the " +
-                              " app? "),
-                          Icon(
-                            Icons.place_outlined,
-                            color: Colors.red,
-                          ),
-                        ],
-                      ),
-                      content: new Text(
-                          "Your current location will be displayed on the map and used for directions, nearby search results, and estimated travel times. "),
-                      actions: <Widget>[
-                        CupertinoDialogAction(
-                          child: Text("Don\'t Allow"),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('Don\'t Allow!')));
-                          },
-                        ),
-                        CupertinoDialogAction(
-                          child: Text("Allow"),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                      ],
-                    );
-                  },
-                );
-              },
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
-            Center(
-              child: SizedBox(
-                width: 100,
-                height: 100,
-                child: CupertinoContextMenu(
-                  child: Image.asset('images/Cupertinosquare.png'),
-                  actions: <Widget>[
-                    CupertinoContextMenuAction(
-                      child: Text(
-                        "Do you Like This App Icon?",
-                        style: TextStyle(
-                            fontSize: 15.0, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    CupertinoContextMenuAction(
-
-                      child: const Text('Yes,I Do!'),
-                      onPressed: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('You Selected Yes!')));
-                        Navigator.pop(context);
-                      },
-                    ),
-                    CupertinoContextMenuAction(
-                      child: const Text('No,I Don\'t!'), isDestructiveAction: true,
-                      onPressed: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('You Selected No! ')));
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ],
+              },child: Icon(CupertinoIcons.play)),
+          middle: Text('CUPERTINO widgets')),
+      child: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(
+                height: 20.0,
+              ),
+              SizedBox(
+                height: 20.0,
+              ),
+              AlertDialogBox(),
+              SizedBox(
+                height: 20.0,
+              ),
+              CupertinoActionSheetWidget(),
+              SizedBox(
+                height: 20.0,
+              ),
+              Center(
+                child: SizedBox(
+                  width: 100,
+                  height: 100,
+                  child: ContextMenuWidget(),
                 ),
               ),
-            ),
-            Spacer(),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(primary: Colors.orange,
-                  elevation: 20.0,shadowColor: Colors.orangeAccent,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.horizontal(
-                          left: Radius.elliptical(200, 50),
-                          right: Radius.elliptical(200, 50))),
-                  padding: EdgeInsetsDirectional.all(20.0),
-                  fixedSize: Size(MediaQuery.of(context).size.width * 0.8,
-                      MediaQuery.of(context).size.height * 0.1)),
-              onPressed: () {
-                showCupertinoModalPopup(
-                    barrierColor: Colors.black38,
-                    // barrierDismissible: false ,
+              SizedBox(
+                height: 50.0,
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    primary: Colors.orange,
+                    elevation: 20.0,
+                    shadowColor: Colors.orangeAccent,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.horizontal(
+                            left: Radius.elliptical(200, 50),
+                            right: Radius.elliptical(200, 50))),
+                    padding: EdgeInsetsDirectional.all(20.0),
+                    fixedSize: Size(MediaQuery.of(context).size.width * 0.8,
+                        MediaQuery.of(context).size.height * 0.1)),
+                onPressed: () {
+                  setState(() {
+                    ShowCupertinoBottomSheet(context);
+                    indicator = !indicator;
+                  });
+                },
+                child: indicator
+                    ? CupertinoActivityIndicator(
+                        radius: 12,
+                        animating: true,
+                      )
+                    : Container(
+                        child: Text(
+                          'Cupertino ActionSheet',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ),
+              ),
+              SizedBox(
+                height: 50.0,
+              ),
 
-                    context: context,
-                    builder: (_) {
-                      return CupertinoActionSheet(
-                        title: Image.asset('images/cupertino.png'),
-                        cancelButton: CupertinoActionSheetAction(
-                            isDestructiveAction: true,
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: Text('Cancel')),
-                        actions: [
-                          CupertinoActionSheetAction(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: Text('Edit')),
-                          CupertinoActionSheetAction(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: Text('Update')),
-                          CupertinoActionSheetAction(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: Text('Delete'))
-                        ],
-                      );
-                    });
-              },
-              child: Text('Cupertino ActionSheet',style: TextStyle(fontSize: 16),),
-            ),
-            SizedBox(
-              height: 50.0,
-            ),
-          ],
+
+
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  Future<dynamic> ShowCupertinoBottomSheet(BuildContext context) {
+    return Future.delayed(const Duration(milliseconds: 650), () {
+      showCupertinoModalPopup(
+          barrierColor: Colors.black38,
+          context: context,
+          builder: (_) {
+            return CupertinoBottomSheet();
+          });
+    });
   }
 }
